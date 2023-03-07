@@ -7,12 +7,6 @@ instance/*
 .webassets-cache
 .env
 
-model.pt
-apps/detector/model.pt
-
-apps/migrations
-local.sqlite
-
 ### Flask.Python Stack ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -265,3 +259,10 @@ poetry.toml
 #!! ERROR: vscode is undefined. Use list command to see defined gitignore types !!#
 
 # End of https://www.toptal.com/developers/gitignore/api/python,flask,vscode
+
+
+model.pt
+apps/detector/model.pt
+
+apps/migrations
+local.sqlite
