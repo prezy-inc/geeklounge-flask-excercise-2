@@ -264,5 +264,6 @@ poetry.toml
 model.pt
 apps/detector/model.pt
 
-apps/migrations
+migrations
 local.sqlite
+apps/images
