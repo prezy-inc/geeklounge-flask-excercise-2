@@ -10,8 +10,16 @@ from apps.app import db
 from apps.crud.models import User
 from apps.detector.forms import DeleteForm, DetectorForm, UploadImageForm
 from apps.detector.models import UserImage, UserImageTag
-from flask import (Blueprint, current_app, flash, redirect, render_template,
-                   request, send_from_directory, url_for)
+from flask import (
+    Blueprint,
+    current_app,
+    flash,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+    url_for,
+)
 from flask_login import current_user, login_required
 from PIL import Image
 from sqlalchemy.exc import SQLAlchemyError
@@ -21,13 +29,16 @@ def make_color():
     color = [random.randint(0, 255) for _ in range(3)]
     return color
 
+
 def make_line(result_image):
     line = round(0.002 * max(result_image.shape[0:2])) + 1
     return line
 
+
 def draw_lines(c1, c2, result_image, line, color):
     cv2.rectangle(result_image, c1, c2, color, thickness=line)
     return cv2
+
 
 def draw_texts(result_image, line, c1, cv2, color, labels, label):
     display_txt = f"{labels[label]}"
@@ -46,6 +57,7 @@ def draw_texts(result_image, line, c1, cv2, color, labels, label):
         lineType=cv2.LINE_AA,
     )
     return cv2
+
 
 def exec_detect(target_image_path):
     labels = current_app.config["LABELS"]
@@ -75,9 +87,12 @@ def exec_detect(target_image_path):
                 Path(current_app.config["UPLOAD_FOLDER"], detected_image_file_name)
             )
 
-            cv2.imwrite(detected_image_file_path, cv2.cvtColor(result_image, cv2.COLOR_RGB2BGR))
+            cv2.imwrite(
+                detected_image_file_path, cv2.cvtColor(result_image, cv2.COLOR_RGB2BGR)
+            )
 
-            return tags, detected_image_file_name
+    return tags, detected_image_file_name
+
 
 def save_detected_image_tags(user_image, tags, detected_image_file_name):
     user_image.image_path = detected_image_file_name
@@ -89,6 +104,7 @@ def save_detected_image_tags(user_image, tags, detected_image_file_name):
         db.session.add(user_image_tag)
 
     db.session.commit()
+
 
 dt = Blueprint("detector", __name__, template_folder="templates")
 
